@@ -1,0 +1,123 @@
+% Copyright (c) 2014, Christopher Mark Gore,
+% All rights reserved.
+%
+% 2317 South River Road, Saint Charles, Missouri 63303 USA.
+% Web: http://cgore.com
+% Email: cgore@cgore.com
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in the
+%       documentation and/or other materials provided with the distribution.
+%
+%     * Neither the name of Christopher Mark Gore nor the names of other
+%       contributors may be used to endorse or promote products derived from
+%       this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+
+\documentclass{seminar}
+
+\usepackage{amsmath}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{bookman}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage[dvips]{pstricks}
+\usepackage{relsize}
+\usepackage{semcolor,slidesec}
+\input{seminar.bug}
+\input{seminar.bg2}
+\usepackage[normalem]{ulem}
+
+\definecolor{fillcolor}{rgb}{0.9,0.95,1.0}
+\definecolor{linecolor}{rgb}{0.8,0.85,0.9}
+\slideframe[\psset{fillcolor=fillcolor,linecolor=linecolor}]{scshadow}
+
+\newcommand{\hc}{Blue}
+\newcommand{\h}[1]{\slideheading{\textcolor{\hc}{#1}}}
+\newcommand{\tq}[1]{\textcolor{Green}{\textbf{#1}}}
+\newcommand{\tbd}[1]{\textcolor{Blue}{\textit{#1}}}
+\newcommand{\TODO}{{\Huge \textcolor{Red}{\textbf{{TO DO}}}}}
+
+\definecolor{commentcolor}{rgb}{0.1,0.1,0.4}
+\definecolor{identifiercolor}{rgb}{0.2,0.2,0.2}
+\definecolor{keywordcolor}{rgb}{0.1,0.3,0.1}
+\definecolor{cexcolor}{rgb}{0.25,0.25,0.4}
+\lstset{
+  basicstyle=\small,
+  language=Lisp,
+  morekeywords={make-instance},
+  escapeinside={\%*}{*)},
+  commentstyle=\itshape\color{commentcolor},
+  identifierstyle=\color{identifiercolor},
+  keywordstyle=\color{keywordcolor}
+}
+\newcommand{\cex}[1]{\textcolor{cexcolor}{\textit{#1}}}
+
+\title{\psshadowbox{Common Lisp Macros}}
+\author{Christopher Mark Gore\\
+  \texttt{http://www.cgore.com}\\
+  \texttt{cgore@cgore.com}\\
+  \raisebox{-2pt}{\includegraphics[height=10pt]{twitter-logo.eps}}
+  \texttt{@cgore}}
+\date{Incomplete Draft: \today}
+
+\begin{document}
+
+\raggedslides[0mm]
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \color{\hc}
+
+  \begin{center}
+    \includegraphics[height=1.25in]{lambda-sticker-blue.eps}
+  \end{center}
+
+  \maketitle
+
+  \color{Black}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Getting Started with Common Lisp}
+
+  \begin{enumerate}
+    \item Install Linux.\\
+      \texttt{http://aptosid.com}
+    \item Install SBCL and some libraries.\\
+      \texttt{apt-get install sbcl\{,-doc,-source\} \textbackslash \\
+        cl-\{asdf,cffi\}}
+    \item Install Emacs and SLIME \textit{(Not strictly required.)}\\
+      \texttt{apt-get install emacs\{,-goodies-el\} cl-swank \textbackslash \\
+        cl-swank slime common-lisp-controller}
+  \end{enumerate}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{center}
+    \textcolor{\hc}{\textbf{\emph{\Huge{Questions?}}}}
+  \end{center}
+\end{slide}
+
+\end{document}
