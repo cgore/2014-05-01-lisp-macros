@@ -72,13 +72,13 @@
 }
 \newcommand{\cex}[1]{\textcolor{cexcolor}{\textit{#1}}}
 
-\title{\psshadowbox{Common Lisp Macros}}
+\title{\psshadowbox{Macros in Common Lisp}}
 \author{Christopher Mark Gore\\
   \texttt{http://www.cgore.com}\\
   \texttt{cgore@cgore.com}\\
   \raisebox{-2pt}{\includegraphics[height=10pt]{twitter-logo.eps}}
   \texttt{@cgore}}
-\date{Incomplete Draft: \today}
+\date{Thursday, May 1, \textsc{ad} 2014}
 
 \begin{document}
 
@@ -112,6 +112,118 @@
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Lisp Macros Are Vastly Superior To:}
+
+  \begin{enumerate}
+    \item Not having macros at all.
+    \item Vim/Emacs\footnote{Excluding \texttt{defmacro} in Elisp, which is equivalent.} macros.
+    \item Microsoft Word/Excel macros.
+    \item C pre-processor macros.
+    \item Scheme ``hygenic'' macros.
+  \end{enumerate}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Why Not Just Functions?}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{How Macros Work}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Backquote}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Gensym}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Macro Expansion}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Macros are Programs Too}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{WITH-* Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Destructuring Parameter Lists}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Anaphoric Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Compile Time and Run Time}
+
+  In Lisp, this distinction still exists, but it doesn't work at all like you
+  are used to.
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Redefining Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Symbol Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{DSLs via Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Growing the Language Itself via Macros}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Ancient History: F-Expressions}
+
+  \TODO
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Reader Macros}
+
+  These are really cool and complicated.
+  You can completely redefine the language with these, making your own language,
+  even one with syntax (Ruby, C, C++, etc.)
+
+  Perhaps another day.
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
