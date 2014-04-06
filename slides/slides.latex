@@ -124,16 +124,62 @@
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Defun versus Defmacro}
+
+  We can define functions with \texttt{defun}, and we can define macros with
+  \texttt{defmacro}.  These two definitions achieve the same goal in quite
+  different ways.
+
+\begin{lstlisting}
+(defun add-one (x)
+  (+ 1 x))
+(defmacro add-one (x)
+  `(+ 1 ,x))
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Why Not Just Functions?}
 
-  \TODO
+  You shouls prefer functions instead of macros if they can do the job.
+  There are lots of operations that can only be done with macros:
+  functions can't make it happen.
+
+  \begin{itemize}
+    \item Linguistic extensions
+    \item Preventing the execution of the arguments
+    \item Controlling the execution of the arguments
+    \item Rewriting the arguments before they are executed
+    \item Natural DSLs
+  \end{itemize}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{How Macros Work}
 
+  Macros have two main features:
+  \begin{enumerate}
+    \item Controlling, preventing, or manipulating the evaluation of their
+      arguments.
+    \item Local expansion within the calling context.
+  \end{enumerate}
+
+  If you really want a macro, it is because you need one of those abilities.
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Controlling Argument Evaluation}
+
   \TODO
 \end{slide}
+
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Local Expansion}
+
+  \TODO
+\end{slide}
+
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Backquote}
