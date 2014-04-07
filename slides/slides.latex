@@ -57,7 +57,7 @@
 \newcommand{\tbd}[1]{\textcolor{Blue}{\textit{#1}}}
 \newcommand{\TODO}{{\Huge \textcolor{Red}{\textbf{{TO DO}}}}}
 
-\definecolor{commentcolor}{rgb}{0.1,0.1,0.4}
+\definecolor{commentcolor}{rgb}{0.1,0.1,0.8}
 \definecolor{identifiercolor}{rgb}{0.2,0.2,0.2}
 \definecolor{keywordcolor}{rgb}{0.1,0.3,0.1}
 \definecolor{cexcolor}{rgb}{0.25,0.25,0.4}
@@ -109,6 +109,11 @@
       \texttt{apt-get install emacs\{,-goodies-el\} cl-swank \textbackslash \\
         cl-swank slime common-lisp-controller}
   \end{enumerate}
+
+  \hrule
+
+  Since my new employer bought me a shiny new MacBook Pro:\\
+  \texttt{brew install sbcl}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,7 +175,25 @@
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Controlling Argument Evaluation}
 
-  \TODO
+\begin{lstlisting}
+(defmacro upside-down (first last)
+  `(progn ,last
+          ,first))
+(upside-down
+  (format t "The first shall be last~%")
+  (format t "The last shall be first~%"))
+\end{lstlisting}
+
+This prints:\\
+\texttt{The last shall be first\\
+The first shall be last}
+
+\begin{lstlisting}
+(let ((x 42))
+  (upside-down (setf x (/ x 2))
+               (setf x (+ x 2)))) ; 22, not 23.
+\end{lstlisting}
+
 \end{slide}
 
 
