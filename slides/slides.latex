@@ -62,7 +62,7 @@
 \definecolor{keywordcolor}{rgb}{0.1,0.3,0.1}
 \definecolor{cexcolor}{rgb}{0.25,0.25,0.4}
 \lstset{
-  basicstyle=\small,
+  basicstyle=\small\ttfamily,
   language=Lisp,
   morekeywords={make-instance},
   escapeinside={\%*}{*)},
@@ -213,20 +213,17 @@ The first shall be last}
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Gensym}
 
-\begin{lstlisting}
-(defmacro broken-swap (x y)
-  `(let ((temp ,x))
-     (setf ,y ,x
-           ,x temp)))
-\end{lstlisting}
-
   How do we avoid capturing a variable?
-  By \textit{generating brand new symbols.}
+  By \textit{generating brand new symbols.}%
   \footnote{In real life, just use \texttt{psetf}.}
+  Each call to \texttt{gensym} makes a brand new uninterned symbol.
 
 \begin{lstlisting}
 (defmacro swap (x y)
-  (let (
+  (let ((temp (gensym)))
+    `(progn (setf ,temp ,x)
+            (setf ,x ,y)
+            (setf ,y ,temp))))
 \end{lstlisting}
 
 \end{slide}
