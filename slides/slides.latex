@@ -213,7 +213,22 @@ The first shall be last}
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Gensym}
 
-  \TODO
+\begin{lstlisting}
+(defmacro broken-swap (x y)
+  `(let ((temp ,x))
+     (setf ,y ,x
+           ,x temp)))
+\end{lstlisting}
+
+  How do we avoid capturing a variable?
+  By \textit{generating brand new symbols.}
+  \footnote{In real life, just use \texttt{psetf}.}
+
+\begin{lstlisting}
+(defmacro swap (x y)
+  (let (
+\end{lstlisting}
+
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
