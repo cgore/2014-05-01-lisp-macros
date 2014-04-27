@@ -301,9 +301,97 @@ The first shall be last}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Wordy If \textellipsis}
+
+  How about a \texttt{wordy-if}?  Some people might actually think this one is a
+  good idea, unlike the last one.
+
+\begin{lstlisting}
+(defmacro wordy-if (conditional then &body body)
+  (let* ((else-position (position 'else body))
+         (true-body (subseq body 0 else-position))
+         (false-body (when else-position
+                       (subseq body
+                               (1+ else-position)))))
+    `(if ,conditional
+       (progn ,@true-body)
+       (progn ,@false-body))))
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\textellipsis Wordy If}
+
+  What does that give us?  Now we can write our conditionals as such:
+
+\begin{lstlisting}
+(wordy-if (< 12 22)
+  then
+    (format t "This is obviously true.~%")
+    (format t "But a good demonstration anyway.~%")
+    "it is true" ; returns this string
+  else
+    (format t "This won't happen.~%")
+    (format t "Neither will this.~%")
+    "and this won't be returned")
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Even Stranger and Wordier If's}
+
+  We can make this \texttt{wordy-if} a lot more complex.
+
+  \begin{enumerate}
+  \item We could add \texttt{else-if} support.
+  \item We could add \texttt{otherwise}, to support a default case.
+  \item We could add \texttt{break}, to break out of the if block.
+  \item Or anything else you can think of.
+  \end{enumerate}
+
+  Common Lisp macros give us the ability to write not just easy-to-use
+  domain-specific languages (DSL's, their most typical real-world use), they
+  give us the ability to easily write \textbf{whole new programming languages
+    inside of Common Lisp itself, with no real challenge of writing a compiler
+    or any other nonsense like Lex and Yacc.}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Local Expansion}
 
-  \TODO
+  Macros work in the local calling namespace, and can therefore capture
+  variables from that namespace or pollute variables into that namespace.
+
+  \begin{itemize}
+  \item If that is what you want, then it is awesome.
+  \item If that isn't what you want, then it can be a big headache and endless
+    source of bugs, if you don't work with it correctly and pay attention to
+    what you are doing.
+  \end{itemize}
+
+  The whole reason for ``hygenic macros'' and the like are because lots of
+  people don't know how to correctly reason about variable pollution and
+  capture.
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Bad Variable Capture}
+
+  Let's write a \texttt{swap} macro!
+
+\begin{lstlisting}
+(defmacro bad-swap (x y)
+  `(let ((temp))
+     (setf temp ,x)
+     (setf ,x ,y)
+     (setf ,y temp)))
+\end{lstlisting}
+
+  We are intentionally altering the \texttt{x} and \texttt{y} passed in, that's
+  good. But what about temp? What if there already is a temp variable in the
+  local scope? What if they try to do \texttt{(swap temp something)}? What if
+  they try to do nested calls to \texttt{swap}? These are all broken.
+
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,7 +399,7 @@ The first shall be last}
 
   How do we avoid capturing a variable?
   By \textit{generating brand new symbols.}%
-  \footnote{In real life, just use \texttt{psetf}.}
+  \footnote{In real life, just use \texttt{(psetf x y y x)}.}
   Each call to \texttt{gensym} makes a brand new uninterned symbol.
 
 \begin{lstlisting}
@@ -321,7 +409,33 @@ The first shall be last}
             (setf ,x ,y)
             (setf ,y ,temp))))
 \end{lstlisting}
+\end{slide}
 
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\sout{Polluting} Gifting the Namespace}
+
+  We can add to the namespace intentionally.  It's not pollution, it's a free
+  gift!  Just like all of those cigarette butts!
+
+\begin{lstlisting}
+(defmacro aif (conditional t-action &optional nil-action)
+  `(let ((it ,conditional))
+     (if it ,t-action ,nil-action)))
+(defmacro awhen (test-form &body body)
+  `(aif ,test-form (progn ,@body)))
+\end{lstlisting}
+
+Now we could change (from our \texttt{wordy-if} macro):
+
+\begin{lstlisting}
+(when else-position (subseq body (1+ else-position)))
+\end{lstlisting}
+
+Into:
+
+\begin{lstlisting}
+(awhen else-position (subseq body (1+ it)))
+\end{lstlisting}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
