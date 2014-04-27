@@ -235,11 +235,76 @@ The first shall be last}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{A Weird If \textellipsis}
+
+  The Normal \texttt{if} in Common Lisp has the following basic form:
+
+\begin{lstlisting}
+(if (some-conditional)
+  (true-form)
+  (optional-false-form))
+\end{lstlisting}
+
+  For example:
+
+\begin{lstlisting}
+(defun is-it-positive? (x)
+  (if (< 0 x)
+    (format t "It's positive!~%")
+    (format t "It's not positive!~%"))
+\end{lstlisting}
+
+  But what if we want a weird version of \texttt{if}?
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\textellipsis A Weird If \textellipsis}
+
+  What if we think this is the\\
+  \textsc{One True Way to Write IF Statements}?
+
+\begin{lstlisting}
+(weird-if (true-form)
+          (some-conditional)
+          (optional-false-form))
+\end{lstlisting}
+
+  An infix-operator variant of if?  Or something like that.  For example:
+
+\begin{lstlisting}
+(defun is-it-positive? (x)
+  (weird-if (format t "It's positive!~%")
+            (< 0 x)
+            (format t "It's not positive!~%"))
+\end{lstlisting}
+
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\textellipsis A Weird If}
+
+  We can make it happen with a very simple macro.
+
+\begin{lstlisting}
+(defmacro weird-if (true-form
+                    conditional
+                    &optional (false-form nil))
+  `(if ,conditional ,true-form ,false-form))
+\end{lstlisting}
+
+  Now we can use or \texttt{weird-if} everywhere!
+
+\begin{lstlisting}
+(weird-if "true" (< 12 22) "false") ; Returns "true"
+(weird-if "true" (< 44 22) "false") ; Returns "false"
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Local Expansion}
 
   \TODO
 \end{slide}
-
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Gensym}
