@@ -218,6 +218,21 @@ The first shall be last}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Nested Backquotes}
+
+  Backquotes are a bit confusing when they are nested inside each other.  It is
+  generally best to avoid it as much as possible, but sometimes it is necessary.
+  The general rule is they apply inside-to-outside.
+
+\begin{lstlisting}
+(let ((a 'x))
+  (eval `(let ((a 'y)
+               (b ',a))
+           `(,a ,b)))) ; Returns '(y x)
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Local Expansion}
 
   
