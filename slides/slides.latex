@@ -196,19 +196,33 @@ The first shall be last}
 
 \end{slide}
 
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Backquote}
+
+  Backquotes let you quote out a list, but selectively evaluate some of the list
+  elements. This shorthand notation makes it really easy to build up complicated
+  s-expressions on the fly.
+
+\begin{lstlisting}
+(let ((a 12)
+      (b 'x)
+      (c '(q r s)))
+  `( a  b   c)         ; Becomes '(a  b c)
+  `(,a  b   c)         ; Becomes '(12 b c)
+  `( a ,b   c)         ; Becomes '(a  x c)
+  `( a  b  ,c)         ; Becomes '(a  b (q r s))
+  `( a  b ,@c)         ; Becomes '(a  b  q r s)
+  `( a  b ,(+ 1 2 3))) ; Becomes '(a  b 6)
+\end{lstlisting}
+
+\end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Local Expansion}
 
-  \TODO
+  
 \end{slide}
 
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Backquote}
-
-  \TODO
-\end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Gensym}
