@@ -45,6 +45,7 @@
 \usepackage{semcolor,slidesec}
 \input{seminar.bug}
 \input{seminar.bg2}
+\usepackage{textcomp}
 \usepackage[normalem]{ulem}
 
 \definecolor{fillcolor}{rgb}{0.9,0.95,1.0}
@@ -68,7 +69,8 @@
   escapeinside={\%*}{*)},
   commentstyle=\itshape\color{commentcolor},
   identifierstyle=\color{identifiercolor},
-  keywordstyle=\color{keywordcolor}
+  keywordstyle=\color{keywordcolor},
+  upquote=true
 }
 \newcommand{\cex}[1]{\textcolor{cexcolor}{\textit{#1}}}
 
@@ -160,6 +162,42 @@
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Backquote}
+
+  Backquotes let you quote out a list, but selectively evaluate some of the list
+  elements. This shorthand notation makes it really easy to build up complicated
+  s-expressions on the fly.
+
+\begin{lstlisting}
+(let ((a 12)
+      (b 'x)
+      (c '(q r s)))
+  `( a  b   c)         ; Becomes '(a  b c)
+  `(,a  b   c)         ; Becomes '(12 b c)
+  `( a ,b   c)         ; Becomes '(a  x c)
+  `( a  b  ,c)         ; Becomes '(a  b (q r s))
+  `( a  b ,@c)         ; Becomes '(a  b  q r s)
+  `( a  b ,(+ 1 2 3))  ; Becomes '(a  b 6)
+\end{lstlisting}
+
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Nested Backquotes}
+
+  Backquotes are a bit confusing when they are nested inside each other.  It is
+  generally best to avoid it as much as possible, but sometimes it is necessary.
+  The general rule is they apply inside-to-outside.
+
+\begin{lstlisting}
+(let ((a 'x))
+  (eval `(let ((a 'y)
+               (b ',a))
+           `(,a ,b)))) ; Returns '(y x)
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{How Macros Work}
 
   Macros have two main features:
@@ -197,45 +235,9 @@ The first shall be last}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Backquote}
-
-  Backquotes let you quote out a list, but selectively evaluate some of the list
-  elements. This shorthand notation makes it really easy to build up complicated
-  s-expressions on the fly.
-
-\begin{lstlisting}
-(let ((a 12)
-      (b 'x)
-      (c '(q r s)))
-  `( a  b   c)         ; Becomes '(a  b c)
-  `(,a  b   c)         ; Becomes '(12 b c)
-  `( a ,b   c)         ; Becomes '(a  x c)
-  `( a  b  ,c)         ; Becomes '(a  b (q r s))
-  `( a  b ,@c)         ; Becomes '(a  b  q r s)
-  `( a  b ,(+ 1 2 3))) ; Becomes '(a  b 6)
-\end{lstlisting}
-
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Nested Backquotes}
-
-  Backquotes are a bit confusing when they are nested inside each other.  It is
-  generally best to avoid it as much as possible, but sometimes it is necessary.
-  The general rule is they apply inside-to-outside.
-
-\begin{lstlisting}
-(let ((a 'x))
-  (eval `(let ((a 'y)
-               (b ',a))
-           `(,a ,b)))) ; Returns '(y x)
-\end{lstlisting}
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Local Expansion}
 
-  
+  \TODO
 \end{slide}
 
 
