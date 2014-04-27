@@ -439,21 +439,27 @@ Into:
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Macro Expansion}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Macros are Programs Too}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{WITH-* Macros}
 
-  \TODO
+  A very common use of ``pollution'' is special-purpose \texttt{with-}* macros.
+  The best example of what these do is the canonical \texttt{with-open-file}.
+
+\begin{lstlisting}
+(with-open-file (input "/some/file/path.txt")
+(do ((line (read-line input) (read-line input nil 'eof)))
+    ((eq line 'eof) "Reached end of file.")
+  (format t "Read a line: ~A~%" line))
+\end{lstlisting}
+
+  You can define your own \texttt{with-db}, \texttt{with-kb},
+  \texttt{with-csv-file}, \texttt{with-json-file}, or whatever makes sense in
+  your specific example.
+
+  \begin{itemize}
+  \item The macro does setup.
+  \item The macro provides one or more resources to use.
+  \item The macro does cleanup.
+  \end{itemize}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -463,56 +469,17 @@ Into:
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Anaphoric Macros}
+  \h{Macro-Related Things}
 
-  \TODO
-\end{slide}
+  These are all really cool topics, but each would really need a lot more time
+  on their own to do them justice.
 
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Compile Time and Run Time}
-
-  In Lisp, this distinction still exists, but it doesn't work at all like you
-  are used to.
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Redefining Macros}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Symbol Macros}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{DSLs via Macros}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Growing the Language Itself via Macros}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Ancient History: F-Expressions}
-
-  \TODO
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Reader Macros}
-
-  These are really cool and complicated.
-  You can completely redefine the language with these, making your own language,
-  even one with syntax (Ruby, C, C++, etc.)
+  \begin{itemize}
+  \item Symbol macros.
+  \item Reader macros.
+  \item M-expressions.
+  \item F-expressions.
+  \end{itemize}
 
   Perhaps another day.
 \end{slide}
