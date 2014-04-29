@@ -463,6 +463,44 @@ Into:
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Macroexpand-1}
+
+  Debugging macros can be a little bit hairy. One of the first set of tools to
+  reach for is \texttt{macroexpand} and \texttt{macroexpand-1}. These two macros
+  both expand out the macros but don't evaluate them, so you can view their
+  expansions.
+
+  You typically want to use \texttt{macroexpand-1}, it expands one level deep.
+
+\begin{lstlisting}
+(defmacro swap (x y)
+  `(psetf ,x ,y
+          ,y ,x))
+(macroexpand-1 '(swap a b)) ; Expands to (psetf a b b a)
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Macroexpand}
+
+  Usually you don't want \texttt{macroexpand}, it expands all the way down the
+  stack of macro calls, including macros you didn't make.
+  This call \texttt{(macroexpand '(swap a b))} produced for me:
+
+\begin{lstlisting}
+(LET* ()
+  (MULTIPLE-VALUE-BIND (#:NEW644)
+      B
+    (LET* ()
+      (MULTIPLE-VALUE-BIND (#:NEW645)
+          A
+        (PROGN (SETQ A #:NEW644)
+               (SETQ B #:NEW645)
+               NIL)))))
+\end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Destructuring Parameter Lists}
 
   \TODO
