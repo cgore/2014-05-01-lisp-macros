@@ -99,6 +99,102 @@
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{First, let's briefly review the history of computers and computer
+    programming, or at least the version of it as it happened in my mind \textellipsis}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\textsc{Math is Hard!}}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{nuns-teach-math.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Computers are \textsc{The Answer!}}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{eniac.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  Programming Languages are \textsc{The Answer!}
+    Let's invent \textsc{Fortran}!}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{backus.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  Rigorous Proofs are \textsc{The Answer!}
+    \textsc{Goto}'s are evil!}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{ew-dijkstra.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  Object Oriented Programming is \textsc{The Answer!}
+  Let's invent C++!}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{bjarne-stroustrup.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{You think I'm mean to you?  Just think of all the people I've forced to use
+  Java through the years!  You've got it easy!}
+
+  \begin{center}
+    \includegraphics[height=2.25in]{james-gosling.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  \textsc{real} Object Oriented Programming is \textsc{The Answer!}
+  I already invented Smalltalk, both C++ and Java suck at stealing from it!
+  And did I mention that I invented the iPad in 1968?}
+
+  \begin{center}
+    \includegraphics[height=2.0in]{alan-kay.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  Functional Programming is \textsc{The Answer!}}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{jerry-sussman.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{No!  Category Theory is \textsc{The Answer!}}
+
+  \begin{center}
+    \includegraphics[height=2.5in]{simon-peyton-jones.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{What about the next \textsc{``The Answer''}?}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Whatever \textsc{``The Answer''} is, we'll just implement it with a macro and
+    pretend it has been in Lisp all the time!}
+
+  \begin{center}
+    \includegraphics[height=2.25in]{mccarthy.eps}
+  \end{center}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Getting Started with Common Lisp}
 
   \begin{enumerate}
@@ -115,7 +211,8 @@
   \hrule
 
   Since my new employer bought me a shiny new MacBook Pro:\\
-  \texttt{brew install sbcl}
+  \texttt{brew install sbcl}\\
+  I'm still confused about getting SLIME working correctly on OS~X though.
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +232,8 @@
 
   We can define functions with \texttt{defun}, and we can define macros with
   \texttt{defmacro}.  These two definitions achieve the same goal in quite
-  different ways.
+  different ways.\footnote{These are equivalent to the \texttt{1+} builtin, only
+    worse.}
 
 \begin{lstlisting}
 (defun add-one (x)
@@ -148,7 +246,7 @@
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{Why Not Just Functions?}
 
-  You shouls prefer functions instead of macros if they can do the job.
+  You should prefer functions instead of macros if they can do the job.
   There are lots of operations that can only be done with macros:
   functions can't make it happen.
 
@@ -159,6 +257,27 @@
     \item Rewriting the arguments before they are executed
     \item Natural DSLs
   \end{itemize}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Macro Expansion Happens Before Runtime}
+
+  It is important to realize that macros are expanded \textit{before} the code
+  is executed.  This means they can only modify the \textit{form} of the code,
+  not the \textit{values} within the code (although they can easily modify the
+  form to have it modify the values.)
+
+\begin{lstlisting}
+(defun fn-add (x y)
+  (+ x y)) ; Operates on the values of x and y.
+(defmacro mac-add (x y)
+  (+ x y)) ; The addition as a form happens instead.
+(defun nested-fn-add (x y)
+  (fn-add x y)) ; Works.
+(defun nested-mac-add (x y)
+  (mac-add x y)) ; Breaks!  X and y aren't numbers!
+\end{lstlisting}
+
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -183,7 +302,7 @@
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Nested Backquotes}
+  \h{Nested Backquotes \textellipsis}
 
   Backquotes are a bit confusing when they are nested inside each other.  It is
   generally best to avoid it as much as possible, but sometimes it is necessary.
@@ -195,6 +314,29 @@
                (b ',a))
            `(,a ,b)))) ; Returns '(y x)
 \end{lstlisting}
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{\textellipsis Nested Backquotes}
+
+Here's a really crazy example of nested backquotes.\footnote{From
+  \textit{Peter Seibel's} \textbf{Practical Common Lisp}, a great book, cf.
+  \texttt{http://www.gigamonkeys.com/book/macros-defining-your-own.html}}
+Good luck figuring it out.
+
+\begin{lstlisting}
+(defmacro once-only ((&rest names) &body body)
+  (let ((gensyms (loop for n in names
+                       collect (gensym))))
+    `(let (,@(loop for g in gensyms
+                   collect `(,g (gensym))))
+      `(let (,,@(loop for g in gensyms for n in names
+                      collect ``(,,g ,,n)))
+        ,(let (,@(loop for n in names for g in gensyms
+                       collect `(,n ,g)))
+           ,@body)))))
+\end{lstlisting}
+
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -260,7 +402,7 @@ The first shall be last}
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \h{\textellipsis A Weird If \textellipsis}
 
-  What if we think this is the\\
+  What if we think this is the \textellipsis\\
   \textsc{One True Way to Write IF Statements}?
 
 \begin{lstlisting}
@@ -351,9 +493,24 @@ The first shall be last}
 
   Common Lisp macros give us the ability to write not just easy-to-use
   domain-specific languages (DSL's, their most typical real-world use), they
-  give us the ability to easily write \textbf{whole new programming languages
-    inside of Common Lisp itself, with no real challenge of writing a compiler
-    or any other nonsense like Lex and Yacc.}
+  give us the ability to easily write \textbf{whole new programming languages}
+  inside of Common Lisp itself, with no real challenge of writing a compiler
+  or any other nonsense like Lex and Yacc.
+\end{slide}
+
+\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \h{Destructuring Macro Arguments}
+
+  Macro arguments don't need to be a simple flat array, you can
+  \textit{destructure} them quite easily to make the macro call more obvious.
+
+\begin{lstlisting}
+(defmacro iterate-over ((item-name list) &body body)
+  `(mapcar (lambda (,item-name) ,@body) ,list))
+(iterate-over (i '(1 2 3 4 5))
+  (format t "We're looping!~%")
+  (format t "Loop ~A ...~%" i))
+\end{lstlisting}
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -460,12 +617,6 @@ Into:
   \item The macro provides one or more resources to use.
   \item The macro does cleanup.
   \end{itemize}
-\end{slide}
-
-\begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \h{Destructuring Parameter Lists}
-
-  \TODO
 \end{slide}
 
 \begin{slide} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
